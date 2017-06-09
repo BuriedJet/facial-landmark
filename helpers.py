@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import socket
 import data
 
@@ -19,7 +20,7 @@ def sendData():
         for d in data.charData:
             charData += str(d) + '\n'
         data.lock.release()
-        print(charData)
+        #print(charData)
         conn.send(bytes(charData, 'ascii'))
 
         conn.close()
@@ -36,3 +37,6 @@ def shape_to_np(shape, dtype="int"):
 
     # return the list of (x, y)-coordinates
     return coords
+
+def pointDistance(a, b):
+    return math.sqrt((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]))
