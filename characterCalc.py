@@ -9,7 +9,6 @@ def calcAll(points, frame):
     return calcAngle(points) + calcEyes(points) + calcEyebrow(points, frame) + calcMouth(points)
 
 def calcAngle(shape):
-    # 2D image points. If you change the image, you need to change vector
     image_points = np.array([
         (shape[30][0], shape[30][1]),  # Nose tip
         (shape[8][0], shape[8][1]),  # Chin
@@ -22,8 +21,6 @@ def calcAngle(shape):
         (shape[48][0], shape[48][1]),  # Left Mouth corner
         (shape[54][0], shape[54][1])  # Right mouth corner
     ], dtype="double")
-
-    # print ("image_points :\n {0}".format(image_points));
 
     # 3D model points.
     model_points = np.array([
@@ -42,15 +39,12 @@ def calcAngle(shape):
 
     # Camera internals
     focal_length = 720
-        #data.cap_width
     center = (data.cap_height / 2, data.cap_width / 2)
     camera_matrix = np.array(
         [[focal_length, 0, center[0]],
          [0, focal_length, center[1]],
          [0, 0, 1]], dtype="double"
     )
-
-    #print("Camera Matrix :\n {0}".format(camera_matrix));
 
     dist_coeffs = np.zeros((4, 1))  # Assuming no lens distortion
 
@@ -67,17 +61,6 @@ def calcAngle(shape):
 
     print("euler:", euler_angle)
     return [euler_angle[0][0] + 180, euler_angle[1][0], euler_angle[2][0]]
-
-    #return [0, 0, 0]
-    # cv2.cvRodrigues2(rotation_vector,rotation_matrix,0)
-
-    #print("Rotation Vector:\n {0}".format(rotation_vector))
-    #print ("Rotation Matrix:\n {0}".format(rotation_matrix))
-    #print("Translation Vector:\n {0}".format(translation_vector))
-
-    #(nose_end_point2D, jacobian) = cv2.projectPoints(np.array([(0.0, 0.0, 1000.0)]), rotation_vector,
-    #                                                 translation_vector, camera_matrix, dist_coeffs)
-
 
 def calcEyes(ps):
     eyeData = [0, 0, 0, 0]
